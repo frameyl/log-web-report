@@ -1,43 +1,50 @@
 import React from "react";
-import { makeData, Logo, Tips } from "./Utils";
-import _ from 'lodash'
+import { makeData, Logo, Tips } from "../Utils";
+import _ from 'lodash';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import fakeData from "./data.js";
 
 const columns=[
   {
-    Header: "Name",
+    Header: "Job",
     columns: [
       {
-        Header: "First Name",
-        accessor: "firstName"
+        Header: "Build",
+        accessor: "runs.build"
       },
       {
-        Header: "Last Name",
-        id: "lastName",
-        accessor: d => d.lastName
+        Header: "Job Name",
+        accessor: "jobs.job_name"
+      },
+      {
+        Header: "Time",
+        accessor: "runs.date"
       }
     ]
   },
   {
-    Header: "Info",
+    Header: "Module",
+    accessor: "modules.module_name"
+  },
+  {
+    Header: "Failure",
     columns: [
       {
-        Header: "Age",
-        accessor: "age",
-        aggregate: vals => _.round(_.mean(vals)),
+        Header: "Test Case",
+        accessor: "testcases.testcase_name",
+        aggregate: vals => _.sum(vals),
         Aggregated: row => {
           return (
             <span>
-              {row.value} (avg)
+              {row.value} (Count)
             </span>
           );
         }
       },
       {
-        Header: "Visits",
-        accessor: "visits",
-        aggregate: vals => _.sum(vals)
+        Header: "S",
+        accessor: "failures.failure_status",
       }
     ]
   }
@@ -47,7 +54,7 @@ class Grid extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: makeData()
+      data: fakeData,
     };
   }
   
@@ -58,7 +65,7 @@ class Grid extends React.Component {
         <ReactTable
           data={data}
           columns={columns}
-          pivotBy={["firstName", "lastName"]}
+          pivotBy={["runs.build", "jobs.job_name", "modules.module_name"]}
           defaultPageSize={10}
           className="-striped -highlight"
         />
