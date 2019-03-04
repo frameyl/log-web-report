@@ -33,18 +33,50 @@ const columns=[
       {
         Header: "Test Case",
         accessor: "testcases.testcase_name",
-        aggregate: vals => _.sum(vals),
+        aggregate: vals => {
+          if(typeof vals[0] === 'string') {
+            return _.size(vals)
+          } else {
+            return _.sum(vals)
+          }
+        },
         Aggregated: row => {
           return (
             <span>
-              {row.value} (Count)
+              {row.value} Cases
             </span>
           );
         }
       },
       {
+        Header: "Priority",
+        accessor: "testcases.priority",
+        aggregate: vals => _.min(vals),
+        Aggregated: row => {
+          return (<span>P{row.value}</span>);
+        }
+      },
+      {
+        Header: "MST",
+        accessor: "msts.name",
+        aggregate: vals => {
+          if(typeof vals[0] === 'string') {
+            //return _.join(_.sortedUniq(vals),',')
+          //} else {
+            return _.join(_.sortedUniq(_.split(_.join(vals,','),',')),',')
+          }
+        },
+        Aggregated: row => {
+          return (<span>{row.value}</span>);
+        }
+      },
+      {
+        Header: "Team",
+        accessor: "teams.name"
+      },
+      {
         Header: "S",
-        accessor: "failures.failure_status",
+        accessor: "failures.fail_status",
       }
     ]
   }
@@ -65,9 +97,11 @@ class Grid extends React.Component {
         <ReactTable
           data={data}
           columns={columns}
-          pivotBy={["runs.build", "jobs.job_name", "modules.module_name"]}
+          pivotBy={["runs.build", "jobs.job_name", "runs.date", "modules.module_name"]}
+          defaultExpanded={["runs.build", "jobs.job_name", "runs.date", "modules.module_name"]}
           defaultPageSize={10}
           className="-striped -highlight"
+          style={{fontSize:10.5}}
         />
         <br />
         <Tips />
