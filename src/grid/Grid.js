@@ -1,5 +1,5 @@
 import React from "react";
-import { makeData, Logo, Tips } from "../Utils";
+import { Logo, Tips } from "../Utils";
 import _ from 'lodash';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
@@ -15,7 +15,11 @@ const columns=[
       },
       {
         Header: "Job Name",
-        accessor: "jobs.job_name"
+        accessor: "jobs.job_name",
+        aggregate: vals => _.uniq(_.flatten(vals)),
+        Aggregated: row => {
+          return (<span>{_.join(_.sortBy(row.value),', ')}</span>);
+        }
       },
       {
         Header: "Time",
@@ -25,7 +29,11 @@ const columns=[
   },
   {
     Header: "Module",
-    accessor: "modules.module_name"
+    accessor: "modules.module_name",
+    aggregate: vals => _.uniq(_.flatten(vals)),
+    Aggregated: row => {
+      return (<span>{_.join(_.sortBy(row.value),', ')}</span>);
+    }
   },
   {
     Header: "Failure",
@@ -51,32 +59,43 @@ const columns=[
       {
         Header: "Priority",
         accessor: "testcases.priority",
-        aggregate: vals => _.min(vals),
+        aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
-          return (<span>P{row.value}</span>);
+          return (<span>{_.join(_.sortBy(row.value),', ')}</span>);
         }
       },
       {
         Header: "MST",
         accessor: "msts.name",
-        aggregate: vals => {
-          if(typeof vals[0] === 'string') {
-            //return _.join(_.sortedUniq(vals),',')
-          //} else {
-            return _.join(_.sortedUniq(_.split(_.join(vals,','),',')),',')
-          }
-        },
+        aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
-          return (<span>{row.value}</span>);
+          return (<span>{_.join(_.sortBy(row.value),', ')}</span>);
         }
       },
       {
         Header: "Team",
-        accessor: "teams.name"
+        accessor: "teams.name",
+        aggregate: vals => _.uniq(_.flatten(vals)),
+        Aggregated: row => {
+          return (<span>{_.join(_.sortBy(row.value),', ')}</span>);
+        }
       },
       {
         Header: "S",
         accessor: "failures.fail_status",
+        aggregate: vals => _.uniq(_.flatten(vals)),
+        Aggregated: row => {
+          return (<span>{_.join(_.sortBy(row.value),', ')}</span>);
+        }
+      },
+      {
+        Cell: props => {
+          return (
+          <div>
+          <button herf='number'>edit</button>
+          <button value='fda'>asdf</button>
+          </div>);
+        }
       }
     ]
   }
@@ -98,7 +117,7 @@ class Grid extends React.Component {
           data={data}
           columns={columns}
           pivotBy={["runs.build", "jobs.job_name", "runs.date", "modules.module_name"]}
-          defaultExpanded={["runs.build", "jobs.job_name", "runs.date", "modules.module_name"]}
+          defaultExpanded={[]}
           defaultPageSize={10}
           className="-striped -highlight"
           style={{fontSize:10.5}}
