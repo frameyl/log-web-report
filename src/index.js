@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Grid from './grid/Grid.js';
+import Query from './query/Query.js';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <div>
+        <Query />
         <Grid />
-        <App />
     </div>,
     document.getElementById('root'));
 

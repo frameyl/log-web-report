@@ -117,10 +117,9 @@ class Grid extends React.Component {
           data={data}
           columns={columns}
           pivotBy={["runs.build", "jobs.job_name", "runs.date", "modules.module_name"]}
-          defaultExpanded={[]}
           defaultPageSize={10}
           className="-striped -highlight"
-          style={{fontSize:10.5}}
+          style={{fontSize:10}}
         />
         <br />
         <Tips />
