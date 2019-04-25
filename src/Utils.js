@@ -35,13 +35,13 @@ export function makeData(len = 5553) {
 }
 
 export const Logo = () =>
-  <div style={{ margin: '1rem auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
-    For more examples, visit {''}
-  <br />
-    <a href="https://github.com/react-tools/react-table" target="_blank">
+  <div style={{ margin: '1rem auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
+    Spirent Smart Test System, visit {''}
+    <br />
+    <a href="http://smarttestdb.cal.ci.spirentcom.com/stapp/front_end" target="_blank">
       <img
-        src="https://github.com/react-tools/media/raw/master/logo-react-table.png"
-        style={{ width: `150px`, margin: ".5em auto .3em" }}
+        src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Spirent_logo.svg/1280px-Spirent_logo.svg"
+        style={{ width: `300px`, margin: ".5em auto .3em" }}
       />
     </a>
   </div>;

@@ -25,16 +25,13 @@ class Query extends React.Component {
     return (
       <div>
         <label> Build:
-          <MultiSelector />
+          <MultiSelector caption='build' url={'http://bdc-hcheng.calenglab.spirentcom.com:8080/RegressionReport/default/query_build.json'} />
         </label>
         <label> Job:
-          <MultiSelector />
+          <MultiSelector caption='job' url={'http://bdc-hcheng.calenglab.spirentcom.com:8080/RegressionReport/default/query_job.json'} />
         </label>
-        <label> Modules:
-          <MultiSelector />
-        </label>
-        <label> Date:
-          <MultiSelector />
+        <label> Module:
+          <MultiSelector caption='module' url={'http://bdc-hcheng.calenglab.spirentcom.com:8080/RegressionReport/default/query_modules.json'} />
         </label>
         <button onClick={this.onQueryClick} > Query </button>
       </div>

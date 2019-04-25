@@ -1,5 +1,6 @@
 import React from "react";
 import AsyncSelect from 'react-select/lib/Async';
+import store from '../Store.js';
 
 const styles = {
   container: (base) => ({
@@ -29,39 +30,55 @@ const styles = {
 };
 
 class MultiSelector extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedOptions: null,
-    };
+  constructor(props) {
+    super(props);
+
+    this.onChange = this.onChange.bind(this);
+    this.getOwnState = this.getOwnState.bind(this);
+    this.getItems = this.getItems.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+
+    this.state = this.getOwnState();
+    this.state.inputValue = '';
+    console.warn(this.props.url);
+  }
+
+  getOwnState() {
+    return { options: store.getState()[this.props.caption] };
   }
 
   onChange(value) {
-    this.setState({
-      selectedOptions: value,
-    });
+    this.setState(this.getOwnState());
   }
 
-  getUsers(input) {
+  onInputChange = (newValue: string) => {
+    const inputValue = newValue.replace(/\s/g, '');
+    this.setState({ inputValue });
+    console.warn('shit:' + inputValue);
+    return inputValue;
+  }
+
+  getItems(input) {
     if (!input) {
       return Promise.resolve([]);
     }
 
-    return fetch(`https://api.github.com/search/users?q=${input}`)
+    return fetch(`${this.props.url}`)
       .then((response) => response.json())
       .then((json) => {
         // return json.items;
-        var users = [];
-        for (var index = 0; index < json.items.length; index++) {
-          users.push({ value: json.items[index].login, label: json.items[index].login })
+        var list = json.output.filter(item => item.includes(input));
+        var items = [];
+        for (var index = 0; index < list.length; index++) {
+          items.push({ value: list[index], label: list[index] })
         }
-        console.warn(users);
-        return users;
+        console.warn('fuck:' + items);
+        return items;
       });
   }
 
   render() {
-    const { selectedOption } = this.state;
+    const { inputValue } = this.state;
 
     return (
       <AsyncSelect
@@ -70,11 +87,11 @@ class MultiSelector extends React.Component {
         defaultOptions
         styles={styles}
         // options={options}
-        value={selectedOption}
-        // onInputChange={this.onChange}
+        value={inputValue}
+        onInputChange={this.onInputChange}
         // onValueClick={this.gotoUser}
         valueKey="id"
-        loadOptions={this.getUsers}
+        loadOptions={this.getItems}
       />
     );
   }
