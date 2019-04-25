@@ -1,33 +1,42 @@
 import React from "react";
-import { Multiselect } from 'react-widgets';
-import Select from 'react-select';
-
-let colors = ['orange', 'red', 'blue', 'purple'];
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-];
+import MultiSelector from "./MultiSelector.js";
 
 class Query extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: 0,
+      query: { date: null, job: null, build: null },
     };
   }
-  
+
+  onChange(value) {
+    this.setState({
+      query: value,
+    });
+  }
+
+  onQueryClick() {
+    console.info("DDD DDD DDD!!")
+  }
+
   render() {
-    const { data } = this.state;
+    const { query } = this.state;
+
     return (
       <div>
-      <Select
-        isMulti
-        options={options}
-      />
-      <Select
-        options={options}
-      />
+        <label> Build:
+          <MultiSelector />
+        </label>
+        <label> Job:
+          <MultiSelector />
+        </label>
+        <label> Modules:
+          <MultiSelector />
+        </label>
+        <label> Date:
+          <MultiSelector />
+        </label>
+        <button onClick={this.onQueryClick} > Query </button>
       </div>
     );
   }

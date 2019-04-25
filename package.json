@@ -8,8 +8,7 @@
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5",
     "react-select": "^2.4.3",
-    "react-table": "^6.9.2",
-    "react-widgets": "^4.4.10"
+    "react-table": "^6.9.2"
   },
   "scripts": {
     "start": "react-scripts start",
