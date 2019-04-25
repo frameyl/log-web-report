@@ -1,19 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import './index.css';
 // import App from './App';
 import Grid from './grid/Grid.js';
 import Query from './query/Query.js';
-import * as serviceWorker from './serviceWorker';
+// import * as serviceWorker from './serviceWorker';
+import store from './Store.js'
 
 ReactDOM.render(
-    <div>
-        <Query />
-        <Grid />
-    </div>,
-    document.getElementById('root'));
+    <Provider store={store}>
+        <div>
+            <Query />
+            <Grid />
+        </div>
+    </Provider>,
+    document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+//serviceWorker.unregister();

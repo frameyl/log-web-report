@@ -1,6 +1,7 @@
 import React from "react";
 import AsyncSelect from 'react-select/lib/Async';
 import store from '../Store.js';
+import * as Actions from '../Actions.js';
 
 const styles = {
   container: (base) => ({
@@ -39,8 +40,8 @@ class MultiSelector extends React.Component {
     this.onInputChange = this.onInputChange.bind(this);
 
     this.state = this.getOwnState();
-    this.state.inputValue = '';
-    console.warn(this.props.url);
+    //this.state.inputValue = '';
+    //console.warn(this.props.url);
   }
 
   getOwnState() {
@@ -48,13 +49,15 @@ class MultiSelector extends React.Component {
   }
 
   onChange(value) {
+    //console.warn("MultiSelector onChange: " + this.props.caption + " value: " + value);
+    store.dispatch(Actions.filter_change(this.props.caption, value));
     this.setState(this.getOwnState());
   }
 
   onInputChange = (newValue: string) => {
     const inputValue = newValue.replace(/\s/g, '');
-    this.setState({ inputValue });
-    console.warn('shit:' + inputValue);
+    // this.setState({ inputValue });
+    //console.warn('shit:' + inputValue);
     return inputValue;
   }
 
@@ -72,13 +75,14 @@ class MultiSelector extends React.Component {
         for (var index = 0; index < list.length; index++) {
           items.push({ value: list[index], label: list[index] })
         }
-        console.warn('fuck:' + items);
+        //console.warn('fuck:' + items);
         return items;
       });
   }
 
   render() {
-    const { inputValue } = this.state;
+    //const { inputValue, options } = this.state;
+    const { options } = this.state;
 
     return (
       <AsyncSelect
@@ -86,9 +90,10 @@ class MultiSelector extends React.Component {
         cacheOptions
         defaultOptions
         styles={styles}
-        // options={options}
-        value={inputValue}
+        options={options}
+        // value={inputValue}
         onInputChange={this.onInputChange}
+        onChange={this.onChange}
         // onValueClick={this.gotoUser}
         valueKey="id"
         loadOptions={this.getItems}

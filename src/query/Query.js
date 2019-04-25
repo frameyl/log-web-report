@@ -1,26 +1,30 @@
 import React from "react";
 import MultiSelector from "./MultiSelector.js";
+import store from '../Store.js';
+import * as Actions from '../Actions.js';
 
 class Query extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      query: { date: null, job: null, build: null },
-    };
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+    this.onQueryClick = this.onQueryClick.bind(this);
   }
 
   onChange(value) {
-    this.setState({
-      query: value,
-    });
+    return;
   }
 
   onQueryClick() {
-    console.info("DDD DDD DDD!!")
+    console.info("DDD DDD DDD!!");
+    const builds = store.getState()['build'];
+    const jobs = store.getState()['job'];
+    const modules = store.getState()['module'];
+
+    store.dispatch(Actions.do_query(builds, jobs, modules));
   }
 
   render() {
-    const { query } = this.state;
+    // const { query } = this.state;
 
     return (
       <div>
