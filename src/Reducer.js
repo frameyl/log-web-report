@@ -24,15 +24,16 @@ export default (state, action) => {
         // }
 
         case ActionTypes.QUERY_STARTED: {
-            return { status: Status.LOADING };
+            return { ...state, status: Status.LOADING };
         }
 
         case ActionTypes.QUERY_SUCCESS: {
-            return { ...state, status: Status.SUCCESS, table_data: action };
+            console.warn("reducer " + action.result.output.length);
+            return { ...state, status: Status.SUCCESS, table_data: action.result.output };
         }
 
         case ActionTypes.QUERY_FAILURE: {
-            return { status: Status.FAILURE };
+            return { ...state, status: Status.FAILURE };
         }
 
         case ActionTypes.FILTER_CHANGE: {
@@ -41,7 +42,11 @@ export default (state, action) => {
             return { ...state, [filter]: change_to };
         }
 
-        default:
+        default: {
+            if (typeof state === 'undefined') {
+                return {};
+            }
             return state;
+        }
     }
 }

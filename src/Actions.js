@@ -24,14 +24,20 @@ export const do_query = (builds, jobs, modules) => {
 
         dispatchQuery(queryStarted())
 
+        console.warn("do_query fetch ")
         fetch(apiUrl).then((response) => {
+            console.warn("do_query fetch done ")
             if (response.status !== 200) {
+                console.warn("do_query fetch failed ");
                 throw new Error('Fail to get query result with status ' + response.status);
             }
 
-            response.json.then((responseJson) => {
-                dispatchQuery(querySuccess(responseJson.output));
+            console.warn("do_query fetch responseJson ");
+            response.json().then((responseJson) => {
+                console.warn("do_query successful " + responseJson.output.length)
+                dispatchQuery(querySuccess(responseJson));
             }).catch((error) => {
+                console.warn("do_query fetch error ");
                 dispatchQuery(queryFailure(error));
             });
         }).catch((error) => {
