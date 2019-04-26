@@ -1,5 +1,5 @@
 import React from "react";
-import { Logo, Tips } from "../Utils";
+
 import _ from 'lodash';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
@@ -146,10 +146,11 @@ class Grid extends React.Component {
   }
 
   handleRowExpanded(newExpanded, index, event) {
-    this.setState({
-      // we override newExpanded, keeping only current selected row expanded
-      expanded: { ...this.state.expanded, [index]: true }
-    });
+    console.warn("handleRowExpanded " + index);
+    // this.setState({
+    //   // we override newExpanded, keeping only current selected row expanded
+    //   expanded: { ...this.state.expanded, [index]: true }
+    // });
   }
 
   render() {
@@ -165,17 +166,14 @@ class Grid extends React.Component {
         <ReactTable
           data={table_data}
           columns={columns}
-          pivotBy={["runs.build", "jobs.job_name", "runs.date", "modules.module_name"]}
-          expanded={this.state.expanded}
+          pivotBy={["runs.build", "jobs.job_name", "modules.module_name"]}
+          //expanded={this.state.expanded}
           defaultPageSize={10}
           className="-striped -highlight"
           style={{ fontSize: 10 }}
           onChange={this.onChange}
           onExpandedChange={(newExpanded, index, event) => this.handleRowExpanded(newExpanded, index, event)}
         />
-        <br />
-        <Tips />
-        <Logo />
       </div>
     );
   }

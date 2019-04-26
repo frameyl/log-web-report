@@ -54,7 +54,7 @@ class MultiSelector extends React.Component {
     this.setState(this.getOwnState());
   }
 
-  onInputChange = (newValue: string) => {
+  onInputChange = (newValue) => {
     const inputValue = newValue.replace(/\s/g, '');
     // this.setState({ inputValue });
     //console.warn('shit:' + inputValue);
@@ -70,7 +70,7 @@ class MultiSelector extends React.Component {
       .then((response) => response.json())
       .then((json) => {
         // return json.items;
-        var list = json.output.filter(item => item.includes(input));
+        var list = json.output.filter(item => item.toLowerCase().includes(input.toLowerCase()));
         var items = [];
         for (var index = 0; index < list.length; index++) {
           items.push({ value: list[index], label: list[index] })

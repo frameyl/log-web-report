@@ -1,6 +1,8 @@
 import React from "react";
 import namor from "namor";
 import "./index.css";
+import logo from "./Spirent-Logo-new-8-8-18.png"
+import logo_v from "./vertical-logo.png"
 
 const range = len => {
   const arr = [];
@@ -40,8 +42,20 @@ export const Logo = () =>
     <br />
     <a href="http://smarttestdb.cal.ci.spirentcom.com/stapp/front_end" target="_blank">
       <img
-        src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Spirent_logo.svg/1280px-Spirent_logo.svg"
+        src={logo} alt="logo"
         style={{ width: `300px`, margin: ".5em auto .3em" }}
+      />
+    </a>
+  </div>;
+
+export const Header = () =>
+  <div style={{ margin: '1rem auto', display: 'flex', flexWrap: 'wrap', alignItems: 'right', justifyContent: 'left' }}>
+    {''}
+    <br />
+    <a href="http://smarttestdb.cal.ci.spirentcom.com/stapp/front_end" target="_blank">
+      <img
+        src={logo_v} alt="logo_v"
+        style={{ width: `70px`, margin: ".5em auto .3em", textAlign: "right" }}
       />
     </a>
   </div>;

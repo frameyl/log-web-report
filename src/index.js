@@ -2,18 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
+import App from './App.js';
 // import App from './App';
-import Grid from './grid/Grid.js';
-import Query from './query/Query.js';
+
 // import * as serviceWorker from './serviceWorker';
 import store from './Store.js'
 
 ReactDOM.render(
     <Provider store={store}>
-        <div>
-            <Query />
-            <Grid />
-        </div>
+        <App />
     </Provider>,
     document.getElementById('root')
 );
