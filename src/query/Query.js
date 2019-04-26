@@ -15,7 +15,7 @@ class Query extends React.Component {
   }
 
   onQueryClick() {
-    console.info("DDD DDD DDD!!");
+    //console.info("DDD DDD DDD!!");
     const builds = store.getState().query['build'];
     const jobs = store.getState().query['job'];
     const modules = store.getState().query['module'];

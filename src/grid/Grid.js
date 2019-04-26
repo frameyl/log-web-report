@@ -12,7 +12,8 @@ const columns = [
     columns: [
       {
         Header: "Build",
-        accessor: "runs.build"
+        accessor: "runs.build",
+        width: 100
       },
       {
         Header: "Job Name",
@@ -20,11 +21,13 @@ const columns = [
         aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
           return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
-        }
+        },
+        width: 200
       },
       {
         Header: "Time",
-        accessor: "runs.date"
+        accessor: "runs.date",
+        width: 100
       }
     ]
   },
@@ -34,7 +37,17 @@ const columns = [
     aggregate: vals => _.uniq(_.flatten(vals)),
     Aggregated: row => {
       return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
-    }
+    },
+    width: 150
+  },
+  {
+    Header: "Defect",
+    accessor: "reviews.defect",
+    aggregate: vals => _.uniq(_.flatten(vals)),
+    Aggregated: row => {
+      return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
+    },
+    width: 100
   },
   {
     Header: "Failure",
@@ -55,7 +68,8 @@ const columns = [
               {row.value} Cases
             </span>
           );
-        }
+        },
+        width: 250
       },
       {
         Header: "Priority",
@@ -63,7 +77,8 @@ const columns = [
         aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
           return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
-        }
+        },
+        width: 50
       },
       {
         Header: "MST",
@@ -71,7 +86,8 @@ const columns = [
         aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
           return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
-        }
+        },
+        width: 80
       },
       {
         Header: "Team",
@@ -79,25 +95,28 @@ const columns = [
         aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
           return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
-        }
+        },
+        width: 80
       },
       {
         Header: "S",
         accessor: "failures.fail_status",
-        aggregate: vals => _.uniq(_.flatten(vals)),
-        Aggregated: row => {
-          return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
-        }
+        width: 30
       },
       {
-        Cell: props => {
-          return (
-            <div>
-              <button herf='number'>edit</button>
-              <button value='fda'>asdf</button>
-            </div>);
-        }
-      }
+        Header: "Details",
+        accessor: "reviews.rootcause",
+        width: 250
+      },
+      // {
+      //   Cell: props => {
+      //     return (
+      //       <div>
+      //         <button herf='number'>edit</button>
+      //         <button value='fda'>asdf</button>
+      //       </div>);
+      //   }
+      // }
     ]
   }
 ]
