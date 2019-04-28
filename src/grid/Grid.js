@@ -20,7 +20,9 @@ const columns = [
         accessor: "jobs.job_name",
         aggregate: vals => _.uniq(_.flatten(vals)),
         Aggregated: row => {
-          return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
+          return (
+            <span> {row.value.length} Jobs </span>
+          );
         },
         width: 200
       },
@@ -36,18 +38,19 @@ const columns = [
     accessor: "modules.module_name",
     aggregate: vals => _.uniq(_.flatten(vals)),
     Aggregated: row => {
-      return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
+      return (
+        <span> {row.value.length} Modules </span>
+      );
     },
     width: 150
   },
   {
     Header: "Defect",
     accessor: "reviews.defect",
-    aggregate: vals => _.uniq(_.flatten(vals)),
     Aggregated: row => {
-      return (<span>{_.join(_.sortBy(row.value), ', ')}</span>);
+      return (<span></span>);
     },
-    width: 100
+    width: 200
   },
   {
     Header: "Failure",
@@ -106,7 +109,10 @@ const columns = [
       {
         Header: "Details",
         accessor: "reviews.rootcause",
-        width: 250
+        width: 600,
+        Aggregated: row => {
+          return (<span></span>);
+        },
       },
       // {
       //   Cell: props => {
@@ -127,12 +133,9 @@ class Grid extends React.Component {
     super(props);
     this.onChange = this.onChange.bind(this);
     this.getOwnState = this.getOwnState.bind(this);
-    // this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
-    // this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
     this.state = this.getOwnState();
-    this.state.expanded = { 1: { 1: { 1: { 1: false } } } };
+    this.state.expanded = {};
   }
 
   getOwnState() {
@@ -185,9 +188,9 @@ class Grid extends React.Component {
         <ReactTable
           data={table_data}
           columns={columns}
-          pivotBy={["runs.build", "jobs.job_name", "modules.module_name"]}
+          pivotBy={["runs.build", "jobs.job_name", "reviews.defect"]}
           //expanded={this.state.expanded}
-          defaultPageSize={10}
+          defaultPageSize={15}
           className="-striped -highlight"
           style={{ fontSize: 10 }}
           onChange={this.onChange}
